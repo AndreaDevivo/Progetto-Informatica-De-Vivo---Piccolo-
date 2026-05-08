@@ -1,5 +1,5 @@
 def is_even(number:int) -> bool:
-    """Restituisce TRUE se il numero è pari"""           
+    """Restituisce TRUE se il numero è pari"""          
     return number % 2 == 0     
 
 def is_vowel(letter:str) -> bool:
