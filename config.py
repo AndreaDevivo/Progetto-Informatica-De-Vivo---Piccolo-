@@ -1,0 +1,15 @@
+# --- CONFIGURAZIONE FINESTRA ---
+WIDTH = 800
+HEIGHT = 600
+FPS = 60
+
+# --- COLORI (SISTEMA RGB) ---
+NERO = (30, 30, 30)      
+BIANCO = (240, 240, 240) 
+VERDE = (46, 204, 113)  
+ROSSO = (231, 76, 60)    
+GRIGIO = (127, 140, 141) 
+# --- LOGICA DI GIOCO ---
+GAME_DURATION = 60     
+FADING_THRESHOLD = 10   
+FEEDBACK_DURATION = 0.15 # Durata del colore verde/rosso  (150ms)
