@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 @dataclass
 class Trial:
-    position: str       # "TOP" o "BOTTOM"
-    letter: str         # Una lettera (A-Z)
-    number: int         # Un numero (1-9)
-    expected_answer: bool # Risposta corretta calcolata
+    position: str
+    letter: str
+    number: int
+    expected_answer: bool
+    user_answer: bool | None = None
+    is_correct: bool = False
