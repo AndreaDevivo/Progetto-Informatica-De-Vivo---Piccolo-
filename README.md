@@ -46,12 +46,14 @@ Breve spiegazione di dove sta cosa:
 ```
 brain_shift/
 ├── main.py           ← entry point
+├── ui.py             ← interfaccia grafica
 ├── rules.py          ← logica regole
 ├── scoring.py        ← sistema scoring
-├── ...
+├── models.py         ← contenitore di classi
+├── generator.py      ← generatore di oggetti
+├── config.py         ← configurazione per interfaccia
 ├── docs/             ← documentazione
 └── tests/            ← test pytest
-```
 
 ## Come lanciare i test
 
