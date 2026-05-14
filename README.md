@@ -55,7 +55,8 @@ brain_shift/
 ├── docs/             ← documentazione
 └── tests/            ← test pytest
 
-## Come lanciare i test
+
+### Come Lanciare i test
 
 ```bash
 pytest tests/
