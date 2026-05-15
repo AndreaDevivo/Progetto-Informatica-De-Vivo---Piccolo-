@@ -26,4 +26,4 @@ L'IA può aiutarvi con il **codice**. Per la documentazione in `docs/`:
 - può correggervi refusi e grammatica
 - **non** può scrivere al posto vostro `scelte.md`, `devlog.md`, `uso-ia.md`
 
-Queste sono le parti metacognitive: se le scrive l'IA, perdete tutta la parte formativa del progetto. E all'orale si nota.
+Queste sono le parti metacognitive: se le scrive l'IA, perdete tutta la parte formativa del progetto. E all'orale si nota
