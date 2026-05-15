@@ -57,10 +57,9 @@ brain_shift/
 
 
 
-
+```bash
 ### Come Lanciare i test
 
-```bash
 pytest tests/
 ```
 
