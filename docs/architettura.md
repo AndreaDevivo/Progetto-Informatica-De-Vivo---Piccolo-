@@ -69,63 +69,28 @@ sequenceDiagram
     participant Player
     participant MainLoop as main.py
     participant Generator as generator.py
-    participant Trial as Trial Instance (models.py)
-    participant Rules as rules.py
-    participant Scoring as scoring.py
+    participant Trial as Trial Instance
     participant UI as ui.py
 
-    Note over MainLoop, Generator: 1. GENERAZIONE (Nascita)
-    MainLoop->>Generator: Richiede nuovo Trial (con seed RNG)
-    activate Generator
-    Generator->>Generator: Estrae dati casuali (Lettera, Numero, Posizione)
-    Generator->>Trial: Crea Istanza con dati 
-    activate Trial
-    Generator->>Generator: Calcola risposta attesa (compute_expected_answer)
-    Generator-->>MainLoop: Restituisce l'oggetto Trial completo
-    deactivate Generator
-
+    Note over MainLoop, Generator: 1. GENERAZIONE
+    MainLoop->>Generator: Richiede nuovo Trial
+    Generator-->>MainLoop: Restituisce oggetto Trial
+    
     Note over MainLoop, UI: 2. PRESENTAZIONE
-    MainLoop->>UI: draw_card(Trial_Instance)
-    activate UI
-    UI->>Trial: Legge dati (Posizione, Lettera, Numero)
-    UI-->>MainLoop: Rende la carta visibile
-    deactivate UI
+    MainLoop->>UI: draw_card(Trial)
 
-    Note over Player, MainLoop: 3. RISPOSTA (Input)
+    Note over Player, MainLoop: 3. RISPOSTA
     Player->>MainLoop: Preme Freccia (Destra/Sinistra)
-    MainLoop->>Trial: Imposta user_answer (SÌ/NO)
-
+    
     Note over MainLoop, Trial: 4. VALUTAZIONE
-    MainLoop->>Trial: Confronta user_answer vs expected_answer
-    alt Risposta Corretta
-        Trial-->>MainLoop: is_correct = True
-    else Risposta Errata
-        Trial-->>MainLoop: is_correct = False
-    end
+    MainLoop->>MainLoop: Confronto user_answer vs expected_answer
 
-    Note over MainLoop, Scoring: 5. AGGIORNAMENTO PUNTEGGIO
-    MainLoop->>Scoring: apply_answer(current_score, is_correct)
-    activate Scoring
-    alt is_correct is True
-        Scoring-->>MainLoop: Restituisce current_score + 10
-    else is_correct is False
-        Scoring-->>MainLoop: Restituisce current_score + 0
-    end
-    deactivate Scoring
-
-    Note over MainLoop, UI: 6. FEEDBACK (Attivazione)
-    MainLoop->>UI: Attiva feedback visivo (Verde/Rosso) per 0.1s
-    activate UI
-    Note right of UI: Disegna bordo colorato sulla carta
-    UI-->>MainLoop: Conclude disegno
-    deactivate UI
-    MainLoop->>MainLoop: Riproduce Effetto Sonoro (Audio Bonus)
-
-    Note over MainLoop, Trial: 7. ARCHIVIAZIONE
-    MainLoop->>MainLoop: Aggiorna contatori (Corrette/Errate)
-    MainLoop->>MainLoop: Salva dati per Statistiche Finali
-    deactivate Trial
-    Note over MainLoop: Distruzione Istanza Trial (Il ciclo ricomincia)
+    Note over MainLoop, UI: 5. FEEDBACK VISIVO
+    MainLoop->>UI: Attiva lampeggio (Verde/Rosso)
+    Note right of UI: Il feedback è solo visivo per evitare latenze audio.
+    
+    Note over MainLoop: 6. ARCHIVIAZIONE
+    MainLoop->>MainLoop: Aggiorna Score e Statistiche
 ```
 
 ## Dati principali
@@ -158,7 +123,7 @@ Chi lo modifica: Nessuno, serve solo per la lettura nella schermata RESULTS.
 
 ## Scoring: come è implementato
 
-La logica del punteggio è nel file scoring.py. Abbiamo tradotto la specifica in modo molto lineare: ogni volta che indovini, chiamiamo la funzione apply_answer che aggiunge 10 punti. Non abbiamo messo moltiplicatori per ora, così i test di pytest sono più facili da gestire e il punteggio è sempre prevedibile. Se sbagli, il punteggio rimane fermo e passiamo alla carta successiva.
+La logica del punteggio è nel file scoring.py. Abbiamo tradotto la specifica in modo molto lineare: ogni volta che indovini, chiamiamo la funzione apply_answer che aggiunge 10 punti. Non abbiamo messo moltiplicatori per ora e abbiamo deciso di non inserire feedback sonori per evitare problemi di latenza o dipendenze da driver audio esterni, preferendo un feedback visivo immediato tramite il cambio di colore della carta, così i test di pytest sono più facili da gestire e il punteggio è sempre prevedibile. Se sbagli, il punteggio rimane fermo e passiamo alla carta successiva.
 
 ## Generatore: bilanciamento e seed
 
@@ -178,6 +143,6 @@ La variabile: Usiamo correct_answers dentro lo ScoringState. Ogni volta che il m
 
 Come funziona il fading: Non è un timer. Nel loop di disegno, controlliamo se correct_answers è minore di 10.
 
-Tecnicamente: Se sei sotto le 10 risposte giuste, passiamo alla UI un valore di Alpha (opacità) di 255 (pieno). Appena arrivi a 10, l'Alpha diventa 0. Le scritte ci sono ancora nel codice, ma diventano trasparenti e spariscono dalla vista del giocatore. È un modo semplice per fare il "level up" visivo.
+Tecnicamente: Se sei sotto le 10 risposte giuste, passiamo alla UI un valore di Alpha (opacità) di 255 (pieno). Appena arrivi a 10, l'Alpha diventa 0. Questo passaggio è puramente visivo e serve a premiare l'apprendimento del giocatore pulendo l'interfaccia di gioco."
 
 ---
