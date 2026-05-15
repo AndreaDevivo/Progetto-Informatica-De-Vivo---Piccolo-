@@ -51,3 +51,4 @@ La divisione del lavoro è stata equa ma "turbolenta": uno di noi si è sporcato
 Voto onesto: 27/30. Il progetto è tecnicamente fatto bene: la logica è separata, il codice è pulito e i test passano tutti. Ci togliamo qualche punto da soli perché la rinuncia all'audio ci brucia ancora e perché la grafica, pur essendo funzionale, è rimasta un po' troppo semplice rispetto all'idea iniziale. Però, considerando che il gioco non crasha mai e rispetta ogni riga della specifica, siamo molto orgogliosi del risultato.
 
 ---
+
