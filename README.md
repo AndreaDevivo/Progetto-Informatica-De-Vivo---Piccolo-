@@ -56,15 +56,12 @@ brain_shift/
 └── tests/            ← test pytest
 
 
-
-```bash
-### Come Lanciare i test
-
-pytest tests/
 ```
-
+### Come Lanciare i test
+```bash
+pytest tests/
 ---
-
+```
 ### Domande-guida per questa pagina
 
 Non vanno lasciate nel file finale, servono solo a voi per capire cosa scrivere.
