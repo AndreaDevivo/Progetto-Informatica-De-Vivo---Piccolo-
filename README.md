@@ -32,8 +32,8 @@ Specificate:
 
 ## Controlli
 
-- ← freccia sinistra: per rispondere SÌ
-- → freccia destra: per rispondere NO
+- ← freccia sinistra: per rispondere NO
+- → freccia destra: per rispondere SI
 
 ## Screenshot
 
