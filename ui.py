@@ -5,10 +5,9 @@ def draw_card(surface, trial, feedback_color=None):
     """
     Disegna la carta FISSA al centro dello schermo e applica il feedback sul colore.
     """
-    # Se c'è un feedback attivo usiamo il colore (VERDE o ROSSO), altrimenti BIANCO
     background_color = feedback_color if feedback_color != None else BIANCO
        
-    # Dimensioni della carta da mockup del prof (orizzontale)
+    # Dimensioni della carta (orizzontale)
     width = 250
     height = 180
     x_pos = WIDTH // 2 - width // 2
@@ -25,12 +24,11 @@ def draw_card(surface, trial, feedback_color=None):
     text_rect = text_surface.get_rect(center=(x_pos + width // 2, y_pos + height // 2))
     surface.blit(text_surface, text_rect)
 
-    # --- CUE VISIVO: DISEGNO DELLA DOMANDA LATERALE ---
-    # Scegliamo il testo in base alla posizione logica del trial
+    # ---  DISEGNO DELLA DOMANDA LATERALE ---
     if trial.position == "TOP":
         domanda_testo = "Il numero è pari?"
     else:
-        domanda_testo = "La lettera è una vocale?"
+        domanda_testo = "La letterà è una vocale?"
 
     # Dimensioni del box della domanda alla destra della carta
     box_w, box_h = 250, 75
@@ -54,13 +52,13 @@ def draw_card(surface, trial, feedback_color=None):
     surface.blit(freccia_surf, freccia_rect)
 
 
-def draw_hud(surface, score, time_left, instructions_alpha, correct, wrong):
+def draw_hud(surface, score, time_left, correct, wrong):
     """
     Disegna il timer, il punteggio racchiuso nel box e i pulsanti dei contatori in basso.
     """
     hud_font = pygame.font.SysFont("Arial", 28, bold=True)
    
-    # 1. Disegno del Timer testuale in alto a sinistra (come da tua richiesta, senza barra)
+    # 1. Disegno del Timer testuale in alto a sinistra
     time_text = hud_font.render(f"Time: {int(time_left)}s", True, GRIGIO)
     surface.blit(time_text, (20, 20))
    
@@ -74,20 +72,8 @@ def draw_hud(surface, score, time_left, instructions_alpha, correct, wrong):
     score_text = hud_font.render(f"Punti: {score}", True, NERO)
     score_rect = score_text.get_rect(center=(score_x + score_w // 2, score_y + score_h // 2))
     surface.blit(score_text, score_rect)
-   
-    # 3. Disegno delle scritte di Aiuto accademiche (in alto e in basso al centro) con Alpha
-    if instructions_alpha > 0:
-        help_font = pygame.font.SysFont("Arial", 24, italic=True)
-        top_help = help_font.render("TOP: Even Number?", True, GRIGIO)
-        bottom_help = help_font.render("BOTTOM: Vowel Letter?", True, GRIGIO)
-        
-        top_help.set_alpha(instructions_alpha)
-        bottom_help.set_alpha(instructions_alpha)
-       
-        surface.blit(top_help, (WIDTH // 2 - top_help.get_width() // 2, 20))
-        surface.blit(bottom_help, (WIDTH // 2 - bottom_help.get_width() // 2, HEIGHT - 40))
 
-    # 4. Disegno dei contatori in basso (Sbagliate e Corrette)
+    # 3. Disegno dei contatori in basso (Sbagliate e Corrette)
     btn_w, btn_h = 160, 55
     y_btn = HEIGHT - 100
     
@@ -121,4 +107,3 @@ def draw_game_over(surface, final_score):
     surface.blit(title_surf, (WIDTH // 2 - 150, HEIGHT // 2 - 100))
     surface.blit(score_surf, (WIDTH // 2 - 120, HEIGHT // 2))
     surface.blit(retry_surf, (WIDTH // 2 - 160, HEIGHT // 2 + 100))
-}
