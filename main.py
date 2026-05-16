@@ -31,18 +31,16 @@ start_time = time.time()
 
 # --- MAIN LOOP ---
 running = True
-game_started = True #Cambiarlo in False quando implementiamo la schermata di avvio
+game_started = True 
 
 while running:
     current_time = time.time()
    
     for event in pygame.event.get():
-        # Chiude il gioco se clicchi sulla X della finestra
         if event.type == pygame.QUIT:
             running = False
 
         if event.type == pygame.KEYDOWN:
-            # Chiude il gioco se premi il tasto ESC
             if event.key == pygame.K_ESCAPE:
                 running = False
 
@@ -57,8 +55,7 @@ while running:
                     wrong_answers = wrong_answers + 1
                     feedback_color = config.ROSSO
                
-                # Il feedback dura 0.15 secondi
-                feedback_until = current_time + 0.15
+                feedback_until = current_time + config.FEEDBACK_DURATION
                 score = apply_answer(score, is_correct)
                 current_trial = generator.generate_trial(rng)
 
@@ -73,8 +70,7 @@ while running:
                     wrong_answers = wrong_answers + 1
                     feedback_color = config.ROSSO
                
-                # Il feedback dura 0.15 secondi
-                feedback_until = current_time + 0.15
+                feedback_until = current_time + config.FEEDBACK_DURATION
                 score = apply_answer(score, is_correct)
                 current_trial = generator.generate_trial(rng)
 
@@ -82,41 +78,36 @@ while running:
         break
 
     if game_started:
-        # Calcolo del tempo rimanente
         elapsed = current_time - start_time
         remaining = config.GAME_DURATION - elapsed
        
-        # Se il tempo scade, lo blocchiamo a zero
         if remaining <= 0:
             remaining = 0
-            # game_started = False
+            # Qui si può attivare la schermata di game over cambiando stato
     else:
         remaining = float(config.GAME_DURATION)
 
     # --- DISEGNO (Rendering) ---
-    screen.fill((235, 250, 255)) 
+    screen.fill(config.SFONDO_AZZURRO) 
    
-    # 1. Calcolo la trasparenza per le istruzioni 
-    if correct_answers < 10:
+    # 1. Calcolo la trasparenza per le istruzioni accademiche
+    if correct_answers < config.FADING_THRESHOLD:
         instructions_alpha = 255
     else:
         instructions_alpha = 0
 
-    # 2. Calcolo il colore attivo per la carta
+    # 2. Calcolo il colore attivo per la carta (feedback temporaneo)
     if current_time < feedback_until:
         active_color = feedback_color
     else:
         active_color = None
 
-    # 3. Disegno degli elementi tramite il modulo UI
+    # 3. Disegno degli elementi tramite il modulo UI aggiornato
     ui.draw_card(screen, current_trial, active_color)
-    ui.draw_hud(screen, score, remaining, instructions_alpha)
+    ui.draw_hud(screen, score, remaining, instructions_alpha, correct_answers, wrong_answers)
 
-    # Aggiorna il display
     pygame.display.flip()
-   
-    # Mantiene i 60 FPS
-    clock.tick(60)
+    clock.tick(config.FPS)
 
 pygame.quit()
 sys.exit()
