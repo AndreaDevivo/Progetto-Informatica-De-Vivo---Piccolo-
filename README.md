@@ -37,8 +37,9 @@ Specificate:
 
 ## Screenshot
 
-Uno o due screenshot del gioco (anche solo immagini PNG nella cartella `docs/img/`). Aiutano molto chi apre il repo. Una GIF animata è ancora meglio.
+![FotoUI](docs/img/UI1.png)
 
+![FotoUI](docs/img/UI2.png)
 ## Struttura del repository 
 
 Breve spiegazione di dove sta cosa:
