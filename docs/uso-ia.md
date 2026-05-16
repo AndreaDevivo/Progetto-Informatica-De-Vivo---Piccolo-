@@ -60,7 +60,7 @@ L'IA è consentita come assistente (spiegazioni, suggerimenti, debug, codice di 
 
 ### Entry 3: Generazione dei diagrammi dell'architettura
 
-**Dove**: File `README.md` o documentazione tecnica interna (schema dei moduli).
+**Dove**: File `README.md`,`architettura,md`.
 
 **Cosa abbiamo chiesto**: Abbiamo descritto a parole come avevamo diviso i nostri moduli (`main`, `ui`, `scoring`, `rules`) e abbiamo chiesto all'IA di generarci il codice sorgente in formato **Mermaid** per creare il diagramma a blocchi delle relazioni.
 
