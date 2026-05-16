@@ -37,9 +37,6 @@ Specificate:
 
 ## Screenshot
 
-![FotoUI](docs/img/UI1.png)
-
-![FotoUI](docs/img/UI2.png)
 ## Struttura del repository 
 
 Breve spiegazione di dove sta cosa:
