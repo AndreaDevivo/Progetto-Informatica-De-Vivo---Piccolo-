@@ -27,7 +27,7 @@ python main.py
 
 Specificate:
 
-- versione Python richiesta: 3.10
+- versione Python richiesta: 3.11
 - versione pygame richiesta: 2.0
 - versione Pytest richiesta: 9.0.3
 
@@ -54,7 +54,7 @@ brain_shift/
 ├── generator.py      ← generatore di oggetti
 ├── config.py         ← configurazione per interfaccia
 ├── docs/             ← documentazione
-├── docs/img          ← sreenshot del gioco
+├── docs/img          ← screenshot del gioco
 └── tests/            ← test pytest
 
 
