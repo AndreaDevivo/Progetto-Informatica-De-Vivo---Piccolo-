@@ -83,28 +83,21 @@ while running:
        
         if remaining <= 0:
             remaining = 0
-            # Qui si può attivare la schermata di game over cambiando stato
     else:
         remaining = float(config.GAME_DURATION)
 
     # --- DISEGNO (Rendering) ---
     screen.fill(config.SFONDO_AZZURRO) 
    
-    # 1. Calcolo la trasparenza per le istruzioni accademiche
-    if correct_answers < config.FADING_THRESHOLD:
-        instructions_alpha = 255
-    else:
-        instructions_alpha = 0
-
-    # 2. Calcolo il colore attivo per la carta (feedback temporaneo)
+    # 1. Calcolo il colore attivo per la carta (feedback temporaneo)
     if current_time < feedback_until:
         active_color = feedback_color
     else:
         active_color = None
 
-    # 3. Disegno degli elementi tramite il modulo UI aggiornato
+    # 2. Disegno degli elementi tramite il modulo UI aggiornato
     ui.draw_card(screen, current_trial, active_color)
-    ui.draw_hud(screen, score, remaining, instructions_alpha, correct_answers, wrong_answers)
+    ui.draw_hud(screen, score, remaining, correct_answers, wrong_answers)
 
     pygame.display.flip()
     clock.tick(config.FPS)
