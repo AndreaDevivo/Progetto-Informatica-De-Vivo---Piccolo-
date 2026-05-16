@@ -37,6 +37,7 @@ Il fallimento dell'audio: Qui abbiamo dovuto fare una scelta drastica. Avevamo i
 Cosa abbiamo imparato: Che la semplicità vince sempre sulla complessità dell'ultimo minuto. Meglio una cosa che non c'è, piuttosto che una che funziona male.
 
 ---
+- **16/05/2026**: Refactoring completo del layout grafico . Centrata la carta graficamente, inserito il box laterale con freccia per il cambio dinamico della regola (TOP/BOTTOM) e aggiunti i contatori delle risposte corrette/errate nella parte inferiore dello schermo. Mantenuto il timer testuale in alto a sinistra.
 
 ## Bilancio finale
 
