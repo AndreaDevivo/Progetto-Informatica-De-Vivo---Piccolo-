@@ -97,29 +97,29 @@ sequenceDiagram
 
 Per gestire le informazioni senza perderci tra mille variabili, abbiamo usato le dataclass. Sono comode perché raggruppano i dati in modo ordinato:
 
-Trial (in models.py):
+TRIAL (in models.py): 
 
-Cosa contiene: Posizione (TOP/BOTTOM), lettera, numero e la risposta corretta calcolata.
+COSA CONTIENE: Posizione (TOP/BOTTOM), lettera, numero e la risposta corretta calcolata.
 
-Chi lo crea: Il generator.py.
+CHI LO CREA: Il generator.py.
 
-Chi lo modifica: Il main.py quando riceve l'input dell'utente per segnare se la risposta data è giusta o sbagliata.
+CHI LO MODIFICA: Il main.py quando riceve l'input dell'utente per segnare se la risposta data è giusta o sbagliata.
 
-ScoringState (Logica di Sessione):
+SCORING STATE (Logica di Sessione): 
 
-Cosa contiene: Il punteggio attuale (score), il numero di risposte corrette consecutive (per eventuali bonus) e il totale delle risposte date.
+COSA CONTIENE: Il punteggio attuale (score), il numero di risposte corrette consecutive (per eventuali bonus) e il totale delle risposte date.
 
-Chi lo crea: Viene inizializzato nel main.py all'inizio di ogni partita.
+CHI LO CREA: Viene inizializzato nel main.py all'inizio di ogni partita.
 
-Chi lo modifica: Il modulo scoring.py tramite la funzione apply_answer. In pratica, il main passa lo stato attuale a scoring.py, che gli restituisce lo stato aggiornato.
+CHI LO MODIFICA: Il modulo scoring.py tramite la funzione apply_answer. In pratica, il main passa lo stato attuale a scoring.py, che gli restituisce lo stato aggiornato.
 
-SessionStats (Statistiche Finali):
+SESSION STATS (Statistiche Finali):
 
-Cosa contiene: I dati per la schermata finale: totale corrette, totale errate e la precisione (accuratezza %).
+COSA CONTIENE: I dati per la schermata finale: totale corrette, totale errate e la precisione (accuratezza %).
 
-Chi lo crea: Il main.py a fine partita.
+CHI LO CREA: Il main.py a fine partita.
 
-Chi lo modifica: Nessuno, serve solo per la lettura nella schermata RESULTS.
+CHI LO MODIFICA: Nessuno, serve solo per la lettura nella schermata RESULTS.
 
 ## Scoring: come è implementato
 
@@ -127,22 +127,22 @@ La logica del punteggio è nel file scoring.py. Abbiamo tradotto la specifica in
 
 ## Generatore: bilanciamento e seed
 
-Il generator.py è quello che "pesca" le carte dal mazzo:
+Il generator.py è quello che "pesca" le carte dal mazzo: 
 
-Evitare streak lunghe: Per non far uscire sempre la stessa cosa, peschiamo da liste di lettere e numeri già bilanciate che abbiamo messo nel config.py.
+EVITARE STREAK LUNGHE: Per non far uscire sempre la stessa cosa, peschiamo da liste di lettere e numeri già bilanciate che abbiamo messo nel config.py.
 
-Bilanciamento SÌ/NO: Abbiamo calibrato le liste in modo che ci sia circa il 50% di probabilità che la carta rispetti la regola (Pari o Vocale). Così il gioco non è troppo facile né troppo difficile , una via di mezzo.
+BILANCIAMENTO SÌ/NO: Abbiamo calibrato le liste in modo che ci sia circa il 50% di probabilità che la carta rispetti la regola (Pari o Vocale). Così il gioco non è troppo facile né troppo difficile , una via di mezzo.
 
-Il Seed: Questa è la parte più tecnica. Usiamo random.Random(seed) nel main. Perché così, se usiamo lo stesso numero (es. 42), le carte escono sempre nello stesso ordine. Questo ci serve per i test automatici: sappiamo già cosa deve uscire e possiamo verificare se il programma risponde bene.
+IL SEED: Questa è la parte più tecnica. Usiamo random.Random(seed) nel main. Perché così, se usiamo lo stesso numero (es. 42), le carte escono sempre nello stesso ordine. Questo ci serve per i test automatici: sappiamo già cosa deve uscire e possiamo verificare se il programma risponde bene.
 
 ## Fading istruzioni
 
 Qui abbiamo usato un trucco per pulire lo schermo quando il giocatore impara a giocare:
 
-La variabile: Usiamo correct_answers dentro lo ScoringState. Ogni volta che il main vede una risposta giusta, aumenta questo contatore.
+LA VARIABILE: Usiamo correct_answers dentro lo ScoringState. Ogni volta che il main vede una risposta giusta, aumenta questo contatore. 
 
-Come funziona il fading: Non è un timer. Nel loop di disegno, controlliamo se correct_answers è minore di 10.
+COME FUNZIONA IL FADING: Non è un timer. Nel loop di disegno, controlliamo se correct_answers è minore di 10.
 
-Tecnicamente: Se sei sotto le 10 risposte giuste, passiamo alla UI un valore di Alpha (opacità) di 255 (pieno). Appena arrivi a 10, l'Alpha diventa 0. Questo passaggio è puramente visivo e serve a premiare l'apprendimento del giocatore pulendo l'interfaccia di gioco."
+TECNICAMENTE: Se sei sotto le 10 risposte giuste, passiamo alla UI un valore di Alpha (opacità) di 255 (pieno). Appena arrivi a 10, l'Alpha diventa 0. Questo passaggio è puramente visivo e serve a premiare l'apprendimento del giocatore pulendo l'interfaccia di gioco."
 
 ---
