@@ -123,6 +123,6 @@ All'orale, ogni membro del gruppo deve saper spiegare ogni parte del codice. Se 
 ## Cosa non abbiamo chiesto all'IA
 
 * **Tutti i test strutturali con Pytest**: li abbiamo scritti a mano per verificare che la logica delle regole funzionasse secondo le specifiche del prof.
-* **La macchina a stati**: la struttura degli stati (`PLAYING`, `PAUSED`, `INTRO`, `RESULTS`) e il passaggio da uno stato all'altro tramite gli eventi della tastiera è farina del nostro sacco.
+* **La macchina a stati**: la struttura degli stati (`PLAYING`, `PAUSED`, `INTRO`, `RESULTS`) e il passaggio da uno stato all'altro tramite gli eventi della tastiera è stato fatto da noi.
 * **La logica di `rules.py` e `generator.py`**: il controllo dei requisiti (vocale/consonante, pari/dispari) e il bilanciamento dei trial YES/NO basato sul seed.
 * **I file di documentazione**: `docs/devlog.md` e `docs/scelte.md` (scritti interamente da noi analizzando il nostro lavoro).
