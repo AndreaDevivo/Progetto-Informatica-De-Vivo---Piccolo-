@@ -8,10 +8,11 @@
 Classe 4A Informatica — a.s. 2025-26.
 
 ## Cos'è Brain Shift
-Brain Shift è un gioco di velocità che dura 60 secondi.
+Brain Shift è un gioco di velocità che dura 60 secondi.Il funzionamento è molto semplice: al centro dello schermo compare una carta che contiene una lettera e un numero. La regola da seguire non è sempre la stessa, ma cambia dinamicamente round per round: viene indicata da un riquadro con una freccia che spunta sulla destra della carta.
+
 Il giocatore deve seguire una regola diversa in base a dove compare la carta sullo schermo:
-- Se la carta è in **ALTO**: bisogna verificare se il numero visualizzato è **pari**.
-- Se la carta è in **BASSO**: bisogna verificare se la lettera visualizzata è una **vocale**.
+- Se il riquadro mostra la domanda **TOP ("Il numero è pari?")**: dobbiamo controllare il numero sulla carta e capire se è pari o dispari.
+- Se il riquadro mostra la domanda **BOTTOM ("La lettera è una vocale?")**: dobbiamo controllare la lettera e vedere se è una vocale o una consonante.
 - Le risposte utilizzabili sono **SI** o **NO**
 ## Come giocare
 
@@ -53,6 +54,7 @@ brain_shift/
 ├── generator.py      ← generatore di oggetti
 ├── config.py         ← configurazione per interfaccia
 ├── docs/             ← documentazione
+├── docs/img          ← sreenshot del gioco
 └── tests/            ← test pytest
 
 
