@@ -19,7 +19,7 @@ Istruzioni minime ma complete per far partire il gioco da clone pulito:
 
 ```bash
 git clone <https://github.com/AndreaDevivo/Progetto-Informatica-De-Vivo---Piccolo->
-cd < brain_shift >
+cd brain_shift 
 pip install -r requirements.txt
 python main.py
 ```
@@ -28,7 +28,7 @@ Specificate:
 
 - versione Python richiesta: 3.10
 - versione pygame richiesta: 2.0
-- versione Pytest richiesta: (da scrivere) 
+- versione Pytest richiesta: 9.0.3
 
 ## Controlli
 
