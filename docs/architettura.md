@@ -97,7 +97,7 @@ sequenceDiagram
 
 Per gestire le informazioni senza perderci tra mille variabili, abbiamo usato le dataclass. Sono comode perché raggruppano i dati in modo ordinato:
 
-TRIAL (in models.py): 
+1) TRIAL (in models.py): 
 
 COSA CONTIENE: Posizione (TOP/BOTTOM), lettera, numero e la risposta corretta calcolata.
 
@@ -105,7 +105,7 @@ CHI LO CREA: Il generator.py.
 
 CHI LO MODIFICA: Il main.py quando riceve l'input dell'utente per segnare se la risposta data è giusta o sbagliata.
 
-SCORING STATE (Logica di Sessione): 
+2) SCORING STATE (Logica di Sessione): 
 
 COSA CONTIENE: Il punteggio attuale (score), il numero di risposte corrette consecutive (per eventuali bonus) e il totale delle risposte date.
 
@@ -113,7 +113,7 @@ CHI LO CREA: Viene inizializzato nel main.py all'inizio di ogni partita.
 
 CHI LO MODIFICA: Il modulo scoring.py tramite la funzione apply_answer. In pratica, il main passa lo stato attuale a scoring.py, che gli restituisce lo stato aggiornato.
 
-SESSION STATS (Statistiche Finali):
+3) SESSION STATS (Statistiche Finali):
 
 COSA CONTIENE: I dati per la schermata finale: totale corrette, totale errate e la precisione (accuratezza %).
 
