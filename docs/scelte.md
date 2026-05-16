@@ -6,20 +6,18 @@
 
 ### Struttura e gestione dei dati dello Scoring
 
-1. **Cosa**: Abbiamo usato una `dataclass` mutabile (`ScoringState`) passata come argomento alle funzioni che gestiscono il punteggio.
-2. **Perché**: Volevamo evitare a tutti i costi l'uso delle variabili globali (come `global score`) dentro i moduli. 
-3. **Alternative considerate**: Funzioni pure che prendono il vecchio punteggio e restituiscono un valore nuovo. L'abbiamo scartata perché oltre ai punti dovevamo aggiornare contemporaneamente i contatori delle risposte di fila, le combo e gli errori; restituire ogni volta tuple con tre o quattro numeri diversi stava diventando dificile da gestire.
-4. **Conseguenze**: Adesso il `main.py` ha in mano l'oggetto del punteggio e lo passa a `scoring.py` che fa i calcoli e lo modifica direttamente. È diventato tutto molto comodo e pulito, l'unico svantaggio è che dobbiamo stare attenti a non resettare o sovrascrivere questa istanza per sbaglio quando cambiamo schermata nel gioco.
-
+1. **Cosa**: Abbiamo scelto di gestire il punteggio e i contatori delle risposte (`correct_answers`, `wrong_answers`) direttamente come variabili nel loop principale del `main.py`, passandoli come parametri alle funzioni del modulo `ui.py` e aggiornando il punteggio tramite la funzione `apply_answer`.
+2. **Perché**: Inizialmente avevamo ipotizzato strutture più complesse, ma l'architettura attuale ci permette di mantenere l'aggiornamento dei dati estremamente lineare e trasparente direttamente nel flusso degli eventi della tastiera.
+3. **Alternative considerate**: L'uso di variabili globali (scartato subito per non sporcare il codice) o la creazione di una dataclass dedicata allo stato del punteggio. Abbiamo preferito la gestione diretta nel `main.py` perché l'interfaccia deve mostrare i contatori separati in tempo reale nei pulsanti inferiori, e passare variabili pulite rende il codice più leggibile.
+4.**Conseguenze**: Il flusso dei dati è chiarissimo. Il `main.py` ha il pieno controllo dello stato del gioco; l'unico svantaggio è che il codice del ciclo principale deve gestire l'incremento dei singoli contatori all'evento della pressione dei tasti, ma il guadagno in termini di stabilità e facilità di lettura è buono.
 ---
 
 ### Gestione del tempo (Timer dei 60 secondi)
 
 1. **Cosa**: Usiamo `pygame.time.get_ticks()` per calcolare il tempo rimasto con una sottrazione matematica rispetto all'inizio della partita.
-2. **Perché**: Ci serviva precisione assoluta al millisecondo che fosse totalmente indipendente dagli FPS (il frame rate del gioco). Se avessimo contato semplicemente i frame dello schermo, su un computer più vecchio e lento la partita sarebbe durata più di 60 secondi reali, falsando il test.
-3. **Alternative considerate**: Creare un timer integrato di Pygame (`pygame.USEREVENT`) impostato per scattare da solo ogni secondo. Scartata perché volevamo far vedere i decimi di secondo che scorrono sul display in tempo reale, e l'evento che scatta una volta al secondo andava troppo a scatti ed era brutto da vedere.
-4. **Conseguenze**: Mostrare il tempo rimasto è diventato una cavolata. Il problema grosso è nato però con la schermata di pausa: quando blocchi il gioco dobbiamo salvare i millisecondi esatti trascorsi fino a quel momento e "scalari" dal calcolo totale quando si riprende la partita, altrimenti il tempo continuava a scorrere anche a gioco fermo. Ci abbiamo perso un pomeriggio intero per far quadrare i conti.
-
+2. **Perché**: Ci serviva precisione assoluta al millisecondo che fosse totalmente indipendente dagli FPS (il frame rate del gioco). Se avessimo contato semplicemente i frame dello schermo, su un computer più vecchio e lento la partita sarebbe durata più di 60 secondi reali, falsando il test,Inoltre, abbiamo scelto di visualizzare il timer in formato puramente testuale in alto a sinistra per non sovraccaricare graficamente l'HUD.
+3. **Alternative considerate**: Creare una barra grafica temporale che si accorcia o utilizzare un timer integrato di Pygame (`pygame.USEREVENT`). La barra è stata scartata per mantenere l'interfaccia pulita, mentre l'evento andava troppo a scatti.
+4. **Conseguenze**:Calcolare il tempo rimanente è immediato. L'unico svantaggio risiede nel fatto che, non essendoci una barra visiva , il giocatore deve lanciare un rapido sguardo all'angolo dello schermo per controllare i secondi residui.
 ---
 
 ### Fading delle istruzioni di aiuto
@@ -31,12 +29,11 @@
 
 ---
 
-### Feedback visivo dell'errore (Inter-trial interval)
-
-1. **Cosa**: Gestiamo la durata del lampeggio colorato della carta usando una variabile di timestamp nel loop principale del `main.py`.
-2. **Perché**: Quando l'utente preme un tasto, il bordo della carta deve colorarsi di verde o rosso per un istante (circa 100 millisecondi) prima di passare alla carta successiva. Non potevamo assolutamente usare un comando di blocco come `time.sleep(0.1)` perché avrebbe congelato lo schermo e la tastiera, impedendo al giocatore di continuare a premere a ritmo.
-3. **Alternative considerate**: Gestire il tempo del colore usando i thread separati in background. Scartata subito perché Pygame non è thread-safe e rischiavamo di far crashare la grafica a caso durante la sovrapposizione delle immagini.
-4. **Conseguenze**: Abbiamo dovuto aggiungere una variabile di stato nel `main` che salva il millisecondo esatto in cui l'utente risponde. Il loop continua a disegnare il bordo colorato finché il tempo corrente non supera quel timestamp di 100 millisecondi. Il codice del loop principale si è appesantito un po' ed è meno elegante, ma il gioco non si pianta mai.
+### Posizionamento della carta  (Layout Grafico)
+1. **Cosa**: Abbiamo posizionato la carta in modo **fisso al centro dello schermo**. La regola attiva (TOP o BOTTOM) viene comunicata al giocatore tramite un **cue visivo laterale**: un box di testo dinamico contenente la domanda associata, unito a una freccia (`←`).
+2. **Perché**: Volevamo che l'interfaccia grafica rispecchiasse fedelmente i requisiti visivi . Questo layout mantiene l'attenzione visiva del giocatore fissa sul centro dello schermo, migliorando il task-switching.
+3. **Alternative considerate**: Far saltare fisicamente la carta nella metà superiore dello schermo (per il compito sulle lettere) o inferiore (per i numeri). Abbiamo scartato questa opzione perché lo spostamento continuo dell'intero corpo della carta generava affaticamento visivo e non corrispondeva alla disposizione della consegna.
+4. **Conseguenze**: Il posizionamento fisso rende il rendering in `ui.py` molto pulito. La logica di commutazione della regola rimane solida, poiché il `generator.py` assegna comunque la posizione logica (`TOP`/`BOTTOM`) al trial, determinando quale domanda e freccia mostrare a schermo.
 
 ---
 
